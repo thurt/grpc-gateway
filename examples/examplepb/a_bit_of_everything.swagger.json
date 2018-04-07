@@ -489,6 +489,15 @@
         ],
         "tags": [
           "ABitOfEverythingService"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [],
+            "OAuth2": [
+              "read",
+              "write"
+            ]
+          }
         ]
       },
       "put": {
@@ -729,6 +738,22 @@
           "description": "Find out more Echo",
           "url": "https://github.com/grpc-ecosystem/grpc-gateway"
         }
+      }
+    },
+    "/v2/example/empty": {
+      "get": {
+        "operationId": "Empty",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/protobufEmpty"
+            }
+          }
+        },
+        "tags": [
+          "camelCaseServiceName"
+        ]
       }
     },
     "/v2/example/errorwithdetails": {
@@ -1133,6 +1158,40 @@
       }
     }
   },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "X-API-Key",
+      "in": "header"
+    },
+    "BasicAuth": {
+      "type": "basic"
+    },
+    "OAuth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://example.com/oauth/authorize",
+      "tokenUrl": "https://example.com/oauth/token",
+      "scopes": {
+        "admin": "Grants read and write access to administrative information",
+        "read": "Grants read access",
+        "write": "Grants write access"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": [],
+      "BasicAuth": []
+    },
+    {
+      "ApiKeyAuth": [],
+      "OAuth2": [
+        "read",
+        "write"
+      ]
+    }
+  ],
   "externalDocs": {
     "description": "More about gRPC-Gateway",
     "url": "https://github.com/grpc-ecosystem/grpc-gateway"
